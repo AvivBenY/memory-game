@@ -44,28 +44,30 @@ cardsInner.forEach((item) => {
 function handleCards(){
     if (turn === 0) {
         turn = 2;
+        setTimeout(() => {
+          
+        
         if(cardEmoji[0].children[1].innerHTML === cardEmoji[1].children[1].innerHTML){
             counter +=1;
             scoreCnt();
             cardEmoji.forEach(card => {
-            card.disabled = true;
             card.children[1].classList.add("foundCard");
+            card.disabled = true;
             });
             cardEmoji.splice(0, cardEmoji.length);
             return;
             }else{          
             for (let i = 0; i < cardEmoji.length; i++) {
         cardEmoji[i].classList.remove("flipped");
-      }
+      }  
       cardEmoji.splice(0, cardEmoji.length);
-    }};
+    }}, 500);
+  };
 }
 
 function setCardsBack() {
   let arr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
-  console.log("not shuffled", arr);
   shuffle(arr);
-  console.log("shuffled", arr);
   for (let i = 0; i < cardsArray.length; i++) {
     cardsBack[i].innerHTML = cardsArray[arr[i]];
   }
