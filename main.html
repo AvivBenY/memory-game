@@ -1,12 +1,16 @@
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;700&display=swap" rel="stylesheet">
 <header>
-	<a href='index.html'>Memory Game</a>
     <link rel="stylesheet" href="./index.css">
 </header>
 
 <body>
-	<button onclick="setCardsBack()">Shuffle Cards</button>
-	<p class="score-cnt"></p>
+	<h1 class="headline"><strong>Memory Game</strong></h1>
+
+	<div class="header">
+		<button class="header-child" style="color: white;" onclick="restart()">Restart</button>
+		<p 		class="header-child score-cnt"></p>
+		<p 		class="header-child strikes-cnt"></p>
+</div>
 	<section class='deck container flex'>
 		<div class='card'>
 			<div class='inner' value="0">

@@ -2,6 +2,7 @@
 const cardsInner = document.querySelectorAll(".inner");
 const cardsBack = document.querySelectorAll(".back");
 const score = document.querySelector(".score-cnt");
+const strikes = document.querySelector(".strikes-cnt");
 
 //ARGS
 let gameOver = 15;
@@ -27,41 +28,44 @@ const cardsArray = [
 //FUNCTIONS
 
 setCardsBack();
+strikesCnt();
 scoreCnt();
 
 cardsInner.forEach((item) => {
   item.addEventListener("click", (event) => {
-    gameOver--;  
-    isGameOver();
-    turn--;      
-      console.log(turn);
-      item.classList.add("flipped");
-      cardEmoji.push(item);
-      handleCards();
+    turn--;
+    console.log(turn);
+    item.classList.add("flipped");
+    cardEmoji.push(item);
+    handleCards();
   });
 });
 
-function handleCards(){
-    if (turn === 0) {
-        turn = 2;
-        setTimeout(() => {
-          
-        
-        if(cardEmoji[0].children[1].innerHTML === cardEmoji[1].children[1].innerHTML){
-            counter +=1;
-            scoreCnt();
-            cardEmoji.forEach(card => {
-            card.children[1].classList.add("foundCard");
-            card.disabled = true;
-            });
-            cardEmoji.splice(0, cardEmoji.length);
-            return;
-            }else{          
-            for (let i = 0; i < cardEmoji.length; i++) {
-        cardEmoji[i].classList.remove("flipped");
-      }  
-      cardEmoji.splice(0, cardEmoji.length);
-    }}, 500);
+function handleCards() {
+  if (turn === 0) {
+    turn = 2;
+    setTimeout(() => {
+      togglePointer();
+      if (cardEmoji[0].children[1].innerHTML === cardEmoji[1].children[1].innerHTML) {
+        counter += 1;
+        scoreCnt();
+        cardEmoji.forEach(card => {
+        card.children[1].classList.add("foundCard");      
+        card.classList.add("pointer-event");     
+        });
+        cardEmoji.splice(0, cardEmoji.length);
+        return;
+      } else {
+        gameOver--;
+        strikesCnt();
+        isGameOver();
+        for (let i = 0; i < cardEmoji.length; i++) {
+          cardEmoji[i].classList.remove("flipped");
+        }
+        cardEmoji.splice(0, cardEmoji.length);
+      }
+    }, 500);
+    togglePointer();
   };
 }
 
@@ -90,13 +94,26 @@ function shuffle(array) {
   return array;
 }
 
-function scoreCnt(){
+function scoreCnt() {
   score.innerHTML = "Score:" + counter;
 }
+function strikesCnt() {
+  strikes.innerHTML = "Strikes:" + gameOver;
+}
 
-function isGameOver(){
-  if(gameOver === 0){
+function isGameOver() {
+  if (gameOver === 0) {
     alert("GAME OVER");
     location.reload();
+  }
+}
+
+function restart(){
+  location.reload();
+}
+
+function togglePointer(){
+  for (const card of cardsInner) {
+    card.classList.toggle("pointer-event");
   }
 }
